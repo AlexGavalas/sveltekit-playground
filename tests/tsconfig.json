@@ -3,7 +3,12 @@
         "target": "ESNext",
         "module": "ES2015",
         "moduleResolution": "Node",
-        "sourceMap": true,
-        "outDir": "../tests-out"
-    }
+        // "sourceMap": true,
+        "outDir": "../tests-out",
+        "incremental": true,
+        "allowSyntheticDefaultImports": true,
+        "assumeChangesOnlyAffectDirectDependencies": true,
+        "allowJs": true
+    },
+    "include": ["./**.ts", "../playwright.config.ts"]
 }
