@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ES2015",
+		"moduleResolution": "Node",
+		"sourceMap": true,
+		"outDir": "../tests-out"
+	}
+}
