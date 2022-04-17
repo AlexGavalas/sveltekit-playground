@@ -3,23 +3,23 @@ import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: preprocess(),
+    preprocess: preprocess(),
 
-	compilerOptions: {
-		enableSourcemap: false,
-	},
+    compilerOptions: {
+        enableSourcemap: false,
+    },
 
-	kit: {
-		adapter: adapter(),
+    kit: {
+        adapter: adapter(),
 
-		// Override http methods in the Todo forms
-		methodOverride: {
-			allowed: ['PATCH', 'DELETE'],
-		},
+        // Override http methods in the Todo forms
+        methodOverride: {
+            allowed: ['PATCH', 'DELETE'],
+        },
 
-		// Disable Brave warning
-		floc: true,
-	},
+        // Disable Brave warning
+        floc: true,
+    },
 };
 
 export default config;

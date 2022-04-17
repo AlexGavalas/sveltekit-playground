@@ -1,9 +1,9 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const get: RequestHandler = async () => {
-	return {
-		body: {
-			messages: ['Hello', 'Bye'],
-		},
-	};
+    return {
+        body: {
+            messages: ['Hello', 'Bye'],
+        },
+    };
 };

@@ -1,34 +1,34 @@
 <script lang="ts">
-	export let messages: number[];
+    export let messages: number[];
 </script>
 
 <svelte:head>
-	<title>Home</title>
+    <title>Home</title>
 </svelte:head>
 
 <h1>Sveltekit Playground</h1>
 
 <section>
-	<br />
+    <br />
 
-	<p>Data fetched from an API route</p>
+    <p>Data fetched from an API route</p>
 
-	<br />
+    <br />
 
-	{#each messages as message}
-		<p>{message}</p>
-	{/each}
+    {#each messages as message}
+        <p>{message}</p>
+    {/each}
 </section>
 
 <style>
-	h1 {
-		text-align: center;
-	}
+    h1 {
+        text-align: center;
+    }
 
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 </style>

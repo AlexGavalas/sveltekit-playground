@@ -4,80 +4,80 @@ import type { RequestHandler } from '@sveltejs/kit';
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export const get: RequestHandler = async ({ locals }) => {
-	await wait(500);
+    await wait(500);
 
-	if (!locals.userid) {
-		return {
-			status: 401,
-		};
-	}
+    if (!locals.userid) {
+        return {
+            status: 401,
+        };
+    }
 
-	return {
-		body: {
-			tasks: getAll(),
-		},
-	};
+    return {
+        body: {
+            tasks: getAll(),
+        },
+    };
 };
 
 export const post: RequestHandler = async ({ request, locals }) => {
-	await wait(500);
+    await wait(500);
 
-	if (!locals.userid) {
-		return {
-			status: 401,
-		};
-	}
+    if (!locals.userid) {
+        return {
+            status: 401,
+        };
+    }
 
-	const form = await request.formData();
-	const text = form.get('text').toString();
+    const form = await request.formData();
+    const text = form.get('text').toString();
 
-	add(text);
+    add(text);
 
-	return {};
+    return {};
 };
 
 // If the user has JavaScript disabled, the URL will change to
 // include the method override unless we redirect back to /todos
 const redirect = {
-	status: 303,
-	headers: {
-		location: '/todos',
-	},
+    status: 303,
+    headers: {
+        location: '/todos',
+    },
 };
 
 export const patch: RequestHandler = async ({ request, locals }) => {
-	await wait(500);
+    await wait(500);
 
-	if (!locals.userid) {
-		return {
-			status: 401,
-		};
-	}
+    if (!locals.userid) {
+        return {
+            status: 401,
+        };
+    }
 
-	const form = await request.formData();
+    const form = await request.formData();
 
-	const uid = form.get('uid').toString();
-	const text = form.has('text') ? form.get('text').toString() : null;
-	const done = form.has('done') ? !!form.get('done').toString() : null;
+    const uid = form.get('uid').toString();
+    const text = form.has('text') ? form.get('text').toString() : null;
+    const done = form.has('done') ? !!form.get('done').toString() : null;
 
-	update({ text, done, uid });
+    update({ text, done, uid });
 
-	return redirect;
+    return redirect;
 };
 
 export const del: RequestHandler = async ({ request, locals }) => {
-	await wait(500);
+    await wait(500);
 
-	if (!locals.userid) {
-		return {
-			status: 401,
-		};
-	}
+    if (!locals.userid) {
+        return {
+            status: 401,
+        };
+    }
 
-	const form = await request.formData();
-	const id = form.get('uid').toString();
+    const form = await request.formData();
+    const id = form.get('uid').toString();
 
-	remove(id);
+    remove(id);
 
-	return redirect;
+    return redirect;
 };
