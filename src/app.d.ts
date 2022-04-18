@@ -19,3 +19,11 @@ type Task = {
     done: boolean;
     pending_delete?: boolean;
 };
+
+type Suit = 'spades' | 'hearts' | 'clubs' | 'diams';
+
+type Card = {
+    suit: Suit;
+    rank: string | number;
+    order: number;
+};
