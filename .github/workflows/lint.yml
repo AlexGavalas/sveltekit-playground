@@ -25,4 +25,5 @@ jobs:
                   node-version: 16
             - run: yarn install --frozen-lockfile
             - run: npx playwright install
-            - run: yarn test
+            - run: yarn test:e2e
+            - run: yarn test:unit
