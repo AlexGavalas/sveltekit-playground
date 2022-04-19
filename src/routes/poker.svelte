@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { Card, Suit } from '$lib/types';
     import _ from 'lodash';
     import '../cards.css';
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { Task } from '$lib/types';
     import { scale } from 'svelte/transition';
     import { flip } from 'svelte/animate';
 
