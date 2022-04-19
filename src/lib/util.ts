@@ -13,63 +13,59 @@ const RANKINGS = {
     highCard: 0,
 } as const;
 
-const getPlayerRank = (hand: Card[]) => {
-    hand.sort((a, b) => a.order - b.order);
+const isSeqIncrementN = (n: number) => {
+    return (arr: Card[]) => {
+        return (
+            arr.reduce((prev, curr) => (!prev || curr.order - prev.order !== n ? null : curr)) ===
+            _.last(arr)
+        );
+    };
+};
 
-    const isSameSuit = _.chain(hand).map('suit').uniq().value().length === 1;
+const hasNSame = (n: number, grouped: _.Dictionary<Card[]>) => {
+    return _.chain(grouped)
+        .mapValues((v) => v.length === n)
+        .findKey(Boolean)
+        .value();
+};
 
-    const isStraight =
-        hand.reduce((prev, curr) => {
-            if (!prev || curr.order - prev.order !== 1) return null;
-            return curr;
-        }) === _.last(hand);
+const getPlayerRank = (playerHand: Card[]) => {
+    const hand = _.sortBy(playerHand, 'order');
+    const firstCard = _.first(hand);
+    const isSameSuit = _.every(hand, (v) => v.suit === firstCard.suit);
+
+    const isStraight = isSeqIncrementN(1)(hand);
 
     const isRoyalFlush =
-        isSameSuit &&
-        _.first(hand).suit === 'hearts' &&
-        _.first(hand).rank === 10 &&
-        _.last(hand).rank === 'a';
+        isSameSuit && isStraight && firstCard.suit === 'hearts' && firstCard.rank === 10;
 
     const isStraightFlush = isStraight && isSameSuit;
 
-    const isFourOfAKind = _.chain(hand).map('rank').uniq().value().length === 2;
+    const groupedByRank = _.groupBy(hand, 'rank');
 
-    const threeOfAKind = _.chain(hand)
-        .groupBy('rank')
-        .mapValues((v) => v.length === 3)
-        .findKey(Boolean)
-        .value();
+    const isFourOfAKind = hasNSame(4, groupedByRank);
 
-    const twoOfAKind = _.chain(hand)
-        .groupBy('rank')
-        .mapValues((v) => v.length === 2)
-        .findKey(Boolean)
-        .value();
+    const threeOfAKind = hasNSame(3, groupedByRank);
 
-    const twoPair = _.chain(hand)
-        .groupBy('rank')
+    const pairs = _.chain(groupedByRank)
         .mapValues((v) => v.length === 2)
         .omitBy((v) => !v)
         .keys()
         .value();
 
-    const hasTwoPair = twoPair.length === 2;
-
-    const hasFullHouse = threeOfAKind && twoOfAKind;
-
-    const hasFlush = isSameSuit;
-
-    const hasStraight = isStraight;
+    const hasTwoPair = pairs.length === 2;
+    const hasOnePair = pairs.length === 1;
+    const hasFullHouse = threeOfAKind && hasTwoPair;
 
     if (isRoyalFlush) return { ranking: RANKINGS.royalFlush };
     if (isStraightFlush) return { ranking: RANKINGS.straightFlush };
     if (isFourOfAKind) return { ranking: RANKINGS.fourOfAKind };
     if (hasFullHouse) return { ranking: RANKINGS.fullHouse };
-    if (hasFlush) return { ranking: RANKINGS.flush };
-    if (hasStraight) return { ranking: RANKINGS.straight };
+    if (isSameSuit) return { ranking: RANKINGS.flush };
+    if (isStraight) return { ranking: RANKINGS.straight };
     if (threeOfAKind) return { ranking: RANKINGS.threeOfAKind };
     if (hasTwoPair) return { ranking: RANKINGS.twoPair };
-    if (twoOfAKind) return { ranking: RANKINGS.pair };
+    if (hasOnePair) return { ranking: RANKINGS.pair };
     return { ranking: RANKINGS.highCard };
 };
 

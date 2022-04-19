@@ -5,6 +5,7 @@ const config: PlaywrightTestConfig = {
         command: 'yarn build && yarn preview',
         port: 3000,
     },
+    testIgnore: 'src/**/*.spec.ts',
 };
 
 export default config;
