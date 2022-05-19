@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import type { RequestHandler } from '@sveltejs/kit';
+import type { Suit } from '$lib/types';
 
 const ranks = [...Array.from({ length: 9 }, (_, i) => i + 2), 'j', 'q', 'k', 'a'];
 const suits: Suit[] = ['spades', 'hearts', 'clubs', 'diams'];
