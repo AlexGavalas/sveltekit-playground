@@ -1,6 +1,12 @@
-// import adapter from '@sveltejs/adapter-auto';
-import vercel from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-auto';
+// import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
+
+// const vercelAdapterOptions = {
+//     edge: false,
+//     split: false,
+//     external: [],
+// };
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,11 +17,7 @@ const config = {
     },
 
     kit: {
-        adapter: vercel({
-            edge: false,
-            split: false,
-            external: ['@sveltejs/kit/node/polyfills'],
-        }),
+        adapter: adapter(),
 
         // Override http methods in the Todo forms
         methodOverride: {
